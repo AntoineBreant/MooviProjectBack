@@ -36,10 +36,10 @@ if ($method=='GET'){
 }
 
 function find($idFilm){
-  echo ('[
-    {
-      "idFilm" : 1,
-      "titre" : "les evades"
-    }
-  ]');
+  echo ('
+            {
+              "idFilm" : 1,
+              "titre" : "les evades"
+            }
+          ');
 }
