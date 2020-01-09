@@ -1,4 +1,5 @@
 <?php 
+include('db_connector.php');
 // required headers
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -8,6 +9,19 @@ header("Content-Type: application/json; charset=UTF-8");
 
 //permet de choper le chemin
 
+/* ------------REQUETE TYPE -----------------*/
+$connection=openCon();
+$query=$connection->query('select * from t_film_fil');
+$tab;
+while($result=$query->fetch_assoc()){
+  $tab[]=$result;
+}
+
+var_dump(utf8_encode(json_encode($tab)));
+
+closeCon($query);
+
+/* -----------------------------------------*/
 $method = $_SERVER['REQUEST_METHOD'];
 $param= isset($_GET['idFilm']);
 //permet de choper la pethode (get, post, put, etc...)
