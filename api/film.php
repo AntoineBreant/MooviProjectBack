@@ -9,19 +9,6 @@ header("Content-Type: application/json; charset=UTF-8");
 
 //permet de choper le chemin
 
-/* ------------REQUETE TYPE -----------------*/
-$connection=openCon();
-$query=$connection->query('select * from t_film_fil');
-$tab;
-while($result=$query->fetch_assoc()){
-  $tab[]=$result;
-}
-
-var_dump(utf8_encode(json_encode($tab)));
-
-closeCon($query);
-
-/* -----------------------------------------*/
 $method = $_SERVER['REQUEST_METHOD'];
 $param= isset($_GET['idFilm']);
 //permet de choper la pethode (get, post, put, etc...)
@@ -37,23 +24,22 @@ if ($method=='GET'){
 }
 
  function findAll(){
-  echo ('[
-            {
-              "idFilm" : 1,
-              "titre" : "les evades"
-            },
-            {
-              "idFilm" : 2,
-              "titre" : "deuxiemeFilm"
-            }
-          ]');
+  $connection=openCon();
+  $query=$connection->query('select * from t_film_fil');
+  $tab;
+  while($result=$query->fetch_assoc()){
+    $tab[]=$result;
+  }
+  
+ echo(utf8_encode(json_encode($tab)));
+  
+  closeCon($query);
 }
 
 function find($idFilm){
-  echo ('
-            {
-              "idFilm" : 1,
-              "titre" : "les evades"
-            }
-          ');
+  $connection=openCon();
+  $query=$connection->query('select * from t_film_fil where fil_idFilm='.$idFilm.';');
+  $result=$query->fetch_assoc();
+  echo(utf8_encode(json_encode($result)));
+
 }
