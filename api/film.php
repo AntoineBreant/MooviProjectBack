@@ -9,9 +9,10 @@ header("Content-Type: application/json; charset=UTF-8");
 
 //permet de choper le chemin
 
+
 $method = $_SERVER['REQUEST_METHOD'];
 $param= isset($_GET['idFilm']);
-//permet de choper la pethode (get, post, put, etc...)
+//permet de choper la methode (get, post, put, etc...)
 
 if ($method=='GET'){
   if(!$param){
