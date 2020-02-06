@@ -34,7 +34,7 @@ if ($method=='GET'){
   
  echo(utf8_encode(json_encode($tab)));
   
-  closeCon($query);
+  closeCon($connection);
 }
 
 function find($idFilm){

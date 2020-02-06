@@ -66,7 +66,7 @@ function createComment($data){
         $result2=$query2->fetch_assoc();
         
     }
-    closeCon($query);
-    closeCon($query2);
+    closeCon($connection);
+
 
 }
