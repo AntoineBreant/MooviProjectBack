@@ -54,17 +54,13 @@ function canComment($idClient, $idFilm) {
 function createComment($data){
     $connection=openCon();
     $datedujour = date('Y-m-d');    
-    $query=$connection->query("INSERT INTO t_commentaire_com (com_idFilm, com_idClient, com_texte, com_date, com_note) VALUES ('". $data['idFilm'] ."','".$data['idClient'] . "', '". $data['texte'] . "', '". $datedujour . "', '". $data['note'] ."');");
-    $result=$query->fetch_assoc();
+    $querySelect=$connection->query("INSERT INTO t_commentaire_com (com_idFilm, com_idClient, com_texte, com_date, com_note) VALUES ('". $data['idFilm'] ."','".$data['idClient'] . "', '". $data['texte'] . "', '". $datedujour . "', '". $data['note'] ."');");
     
-    $query=$connection->query("SELECT com_idCommentaire FROM t_commentaire_com WHERE com_idClient = '" . $data['idClient'] . "' AND com_idFilm = '" . $data['idFilm'] . "' AND com_texte = '" . $data['texte'] . "' AND com_note = '" . $data['note'] . "' AND com_date = '" . $datedujour . "';");
+    $query=$connection->query("SELECT max(com_idCommentaire) as idMax FROM t_commentaire_com ;");
     $result=$query->fetch_assoc();
-    
 
-    foreach ($d as $data['photo']){
-        $query2=$connection->query("INSERT INTO t_photo_pho (pho_idCommentaire, pho_lien) VALUES ('". $result['com_idCommentaire'] ."','".$d['lien'] . "');");
-        $result2=$query2->fetch_assoc();
-        
+    foreach ($data['photo'] as $d){
+        $query2=$connection->query("INSERT INTO t_photo_pho (pho_idCommentaire, pho_lien) VALUES ('". $result['idMax'] ."','".$d['lien'] . "');");
     }
     closeCon($connection);
 

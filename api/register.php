@@ -23,8 +23,7 @@ function sInscrire($login, $password, $prenom, $nom){
 
     $query=$connection->query("select count(*), cli_idClient from t_client_cli WHERE cli_pseudo = '" . $login . "' AND cli_mdp = '" . $password . "';");
     $result=$query->fetch_assoc();
-    closeCon($query);
-
+    
     if ($result['count(*)'] > 0)
     {
         $data['retour'] = false;
@@ -33,6 +32,6 @@ function sInscrire($login, $password, $prenom, $nom){
         $data['retour'] = true;
     }
     echo (json_encode($data));
-    
+    closeCon($connection);
 }
 ?>
