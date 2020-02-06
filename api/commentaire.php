@@ -44,10 +44,10 @@ function canComment($idClient, $idFilm) {
     $query=$connection->query('select count(*) from t_cli_cde a join t_commande_cde b on a.eff_idCommande=b.cde_idCommande where eff_idFilm='.$idFilm.' and cde_idClient='.$idClient.' ;');
     $result=$query->fetch_assoc();
     if($result['count(*)']>=1){
-        echo '{"canComment": "true"}';
+        echo 'true';
     }
     else 
-    echo '{"canComment": "false"}';    
+    echo 'false';    
     closeCon($query);
 }
 
