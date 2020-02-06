@@ -12,12 +12,6 @@ $method = $_SERVER['REQUEST_METHOD'];
 if ($method=='POST'){
     $data = json_decode(file_get_contents("php://input"),true);
     createCommande($data);
-} elseif ($method=='GET') {
-
-    if(isset($_GET['idClient'])){
-        canComment($_GET['idClient']);
-        exit;
-    }
 } 
 
 function createCommande($data){
