@@ -1,7 +1,0 @@
-select F.fil_idFilm, F.fil_nom, F.fil_duree, F.fil_noteMoyenne, F.fil_resume, F.fil_dateSortie, F.fil_realisateur, F.fil_bandeAnnonce, A.act_nom, G.gen_nom 
-from t_film_fil F, t_acteur_act A, t_genre_gen G, t_fil_gen FG, t_fil_act FA 
-where F.fil_idFilm=1 
-AND F.fil_idFilm = FG.con_idFilm 
-AND FG.gen_idGenre = G.con_idGenre 
-AND F.fil_idFilm = FA.jou_idFilm
-AND A.act_idActeur = FA.jou_idActeur;

@@ -4,31 +4,26 @@ include('db_connector.php');
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
+$data = json_decode(file_get_contents("php://input"),true);
+//permet de choper les variables données par le client
+
 $method = $_SERVER['REQUEST_METHOD'];
-$param= isset($_GET['login']);
-$param2= isset($_GET['password']);
-$param3= isset($_GET['prenom']);
-$param4= isset($_GET['nom']);
-
-
-if ($method=='GET'){
-  if($param && $param2 && $param3 && $param4){
-      sInscrire($_GET['login'], $_GET['password'], $_GET['prenom'], $_GET['nom']);
-  }
-
+if ($method=='POST'){
+    $data = json_decode(file_get_contents("php://input"),true);
+    sInscrire($data);
 }
 
-function sInscrire($login, $password, $prenom, $nom){
+function sInscrire($data){
     $connection=openCon();
 
-    $query=$connection->query("select count(*), cli_idClient from t_client_cli WHERE cli_pseudo = '" . $login . "' AND cli_mdp = '" . $password . "';");
+    $query=$connection->query("select count(*), cli_idClient from t_client_cli WHERE cli_pseudo = '" . $data['login'] . "' AND cli_mdp = '" . $data['password'] . "';");
     $result=$query->fetch_assoc();
     
     if ($result['count(*)'] > 0)
     {
         $data['retour'] = false;
     } else {
-        $query2=$connection->query("INSERT INTO t_client_cli (cli_pseudo, cli_mdp, cli_nom, cli_prenom) VALUES ('". $login ."','". $password . "', '". $nom . "', '". $prenom ."');");
+        $query2=$connection->query("INSERT INTO t_client_cli (cli_pseudo, cli_mdp, cli_nom, cli_prenom) VALUES ('". $data['login'] ."','". $data['password'] . "', '". $data['nom'] . "', '". $data['prenom'] ."');");
         $data['retour'] = true;
     }
     echo (json_encode($data));
