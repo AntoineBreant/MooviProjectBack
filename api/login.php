@@ -33,6 +33,6 @@ function seConnecter($login, $password){
         $data['retour'] = false;
     }
     echo (json_encode($data));
-    closeCon($query);
+    closeCon($connection);
 }
 ?>
