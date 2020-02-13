@@ -16,7 +16,7 @@ if ($method=='POST'){
 function sInscrire($data){
     $connection=openCon();
 
-    $query=$connection->query("select count(*), cli_idClient from t_client_cli WHERE cli_pseudo = '" . $data['login'] . "' AND cli_mdp = '" . $data['password'] . "';");
+    $query=$connection->query("select count(*), cli_idClient from t_client_cli WHERE cli_pseudo = '" . $data['login']. "';");
     $result=$query->fetch_assoc();
     
     if ($result['count(*)'] > 0)
