@@ -111,15 +111,17 @@ function historique($idClient){
   $connection=openCon();
   $query=$connection->query("SELECT CD.cde_idCommande, CD.cde_statut, CD.cde_date FROM t_commande_cde CD, t_client_cli C WHERE C.cli_idClient = " . $idClient . " AND C.cli_idClient = CD.cde_idClient;");
 
+  $i=0;
   while($result=$query->fetch_assoc()){
-
-    $data['commande'][] = $result;
     
     $query2=$connection->query("SELECT F.fil_idFilm, F.fil_nom, F.fil_duree, F.fil_noteMoyenne, F.fil_resume, F.fil_dateSortie, F.fil_realisateur, F.fil_bandeAnnonce FROM t_film_fil F, t_cde_fil CF, t_commande_cde CD WHERE CD.cde_idCommande = " .$result['cde_idCommande'] . " AND CD.cde_idCommande = CF.eff_idCommande AND CF.eff_idFilm = F.fil_idFilm;");
     while($result2=$query2->fetch_assoc()){
 
-      $data['commande'][]['film'] = $result2;
+      $result['films'][] = $result2;
     }
+
+    $data[$i]['commande'] = $result;
+    $i++;
   }
 
   echo(utf8_encode(json_encode($data)));
