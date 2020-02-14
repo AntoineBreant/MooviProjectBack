@@ -96,7 +96,7 @@ function rechercheDate($date1, $date2){
 
 function rechercheGenre($genre){
   $connection=openCon();
-
+ 
   $query=$connection->query("select F.fil_idFilm, F.fil_nom, F.fil_duree, F.fil_noteMoyenne, F.fil_resume, F.fil_dateSortie, F.fil_realisateur, F.fil_bandeAnnonce from t_film_fil F, t_genre_gen G, t_fil_gen FG where G.gen_nom='". $genre ."' AND F.fil_idFilm = FG.con_idFilm AND FG.con_idGenre = G.gen_idGenre;");
 
   $tab;
@@ -109,14 +109,20 @@ function rechercheGenre($genre){
 
 function historique($idClient){
   $connection=openCon();
+  $query=$connection->query("SELECT CD.cde_idCommande, CD.cde_statut, CD.cde_date FROM t_commande_cde CD, t_client_cli C WHERE C.cli_idClient = " . $idClient . " AND C.cli_idClient = CD.cde_idClient;");
 
-  $query=$connection->query("SELECT F.fil_idFilm, F.fil_nom, F.fil_duree, F.fil_noteMoyenne, F.fil_resume, F.fil_dateSortie, F.fil_realisateur, F.fil_bandeAnnonce FROM t_film_fil F, t_cde_fil CF, t_commande_cde CD, t_client_cli C WHERE C.cli_idClient = " . $idClient . " AND C.cli_idClient = CD.cde_idClient AND CD.cde_idCommande = CF.eff_idCommande AND CF.eff_idFilm = F.fil_idFilm;");
-
-  $tab;
   while($result=$query->fetch_assoc()){
-    $tab[]=$result;
+
+    $data['commande'][] = $result;
+    
+    $query2=$connection->query("SELECT F.fil_idFilm, F.fil_nom, F.fil_duree, F.fil_noteMoyenne, F.fil_resume, F.fil_dateSortie, F.fil_realisateur, F.fil_bandeAnnonce FROM t_film_fil F, t_cde_fil CF, t_commande_cde CD WHERE CD.cde_idCommande = " .$result['cde_idCommande'] . " AND CD.cde_idCommande = CF.eff_idCommande AND CF.eff_idFilm = F.fil_idFilm;");
+    while($result2=$query2->fetch_assoc()){
+
+      $data['commande'][]['film'] = $result2;
+    }
   }
-  echo(utf8_encode(json_encode($tab)));
+
+  echo(utf8_encode(json_encode($data)));
   closeCon($connection);
 }
 
