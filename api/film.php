@@ -52,8 +52,15 @@ if ($method=='GET'){
   $connection=openCon();
   $query=$connection->query('select * from t_film_fil');
   $tab;
+  $i=0;
   while($result=$query->fetch_assoc()){
-    $tab[]=$result;
+    $tab[$i]=$result;
+    $query2=$connection->query('select G.gen_nom, FG.con_idGenre from t_film_fil F, t_genre_gen G, t_fil_gen FG where F.fil_idFilm='.$result['fil_idFilm'].' AND F.fil_idFilm = FG.con_idFilm AND FG.con_idGenre = G.gen_idGenre;');
+ 
+    while($result2=$query2->fetch_assoc()){
+        $tab[$i]['genre'][]=$result2;
+    }
+    $i++;
   }
   
  echo(utf8_encode(json_encode($tab)));
