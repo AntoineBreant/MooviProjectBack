@@ -59,8 +59,10 @@ function createComment($data){
     $query=$connection->query("SELECT max(com_idCommentaire) as idMax FROM t_commentaire_com ;");
     $result=$query->fetch_assoc();
 
-    foreach ($data['photo'] as $d){
-        $query2=$connection->query("INSERT INTO t_photo_pho (pho_idCommentaire, pho_lien) VALUES ('". $result['idMax'] ."','".$d['lien'] . "');");
+    if(isset($data['photo'])){
+        foreach ($data['photo'] as $d){
+            $query2=$connection->query("INSERT INTO t_photo_pho (pho_idCommentaire, pho_lien) VALUES ('". $result['idMax'] ."','".$d['lien'] . "');");
+        }   
     }
     closeCon($connection);
 
