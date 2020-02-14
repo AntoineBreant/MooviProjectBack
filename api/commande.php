@@ -23,7 +23,7 @@ function createCommande($data){
     $result=$query->fetch_assoc();
 
     foreach ($data['film'] as $d){
-        $query2=$connection->query("INSERT INTO t_cli_cde (eff_idCommande, eff_idFilm) VALUES ('". $result['idMax'] ."','".$d['idFilm'] . "');");
+        $query2=$connection->query("INSERT INTO t_cde_fil (eff_idCommande, eff_idFilm) VALUES ('". $result['idMax'] ."','".$d['idFilm'] . "');");
         
     }
     closeCon($connection);
