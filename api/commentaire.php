@@ -49,6 +49,8 @@ function canComment($idClient, $idFilm) {
     else 
     echo 'false';    
     closeCon($query);
+    closeCon($connection);
+
 }
 
 function createComment($data){
